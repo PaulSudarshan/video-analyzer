@@ -143,7 +143,7 @@
       {
         "@type": "#Microsoft.VideoAnalyzer.VideoSink",
         "name": "videoSink",
-        "videoName": "rtsp-2",
+        "videoName": "rtsp-3",
         "inputs": [
           {
             "nodeName": "signalGateProcessor",
