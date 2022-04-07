@@ -20,6 +20,11 @@
         "name": "rtspUrl",
         "type": "String",
         "description": "rtsp Url"
+      },
+      {
+        "name": "videoNameParameter",
+        "type": "String",
+        "description": "Video resource name parameter"
       }
     ],
     "sources": [
@@ -41,7 +46,7 @@
       {
         "@type": "#Microsoft.VideoAnalyzer.VideoSink",
         "name": "videoSink",
-        "videoName": "sample-cvr-video-sink",
+        "videoName": "${videoNameParameter}",
         "inputs": [
           {
             "nodeName": "rtspSource",
