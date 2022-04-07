@@ -1,6 +1,6 @@
 {
-  "@apiVersion": "1.1",
   "name": "MyTopology",
+  "@apiVersion": "1.1",
   "properties": {
     "parameters": [
       {
