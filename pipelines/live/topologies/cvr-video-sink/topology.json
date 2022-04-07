@@ -30,31 +30,32 @@
       
       
       
+    {
+        "name": "inferencingUrl",
+        "type": "String",
+        "description": "inferencing Url",
+        "default": "http://yolov3/score"
+      },
       {
-          "name": "inferencingUrl",
-          "type": "String",
-          "description": "inferencing Url",
-          "default": "http://yolov3/score"
-        },
-        {
-          "name": "inferencingUserName",
-          "type": "String",
-          "description": "inferencing endpoint user name.",
-          "default": "dummyUserName"
-        },
-        {
-          "name": "inferencingPassword",
-          "type": "String",
-          "description": "inferencing endpoint password.",
-          "default": "dummyPassword"
-        },
-        {
-          "name": "hubSinkOutputName",
-          "type": "String",
-          "description": "hub sink output name",
-          "default": "inferenceOutput"
-        }
+        "name": "inferencingUserName",
+        "type": "String",
+        "description": "inferencing endpoint user name.",
+        "default": "dummyUserName"
+      },
+      {
+        "name": "inferencingPassword",
+        "type": "String",
+        "description": "inferencing endpoint password.",
+        "default": "dummyPassword"
+      },
+      {
+        "name": "hubSinkOutputName",
+        "type": "String",
+        "description": "hub sink output name",
+        "default": "inferenceOutput"
+      }
     ],
+    
     "sources": [
       {
         "@type": "#Microsoft.VideoAnalyzer.RtspSource",
@@ -73,55 +74,46 @@
     
     
     "processors": [
-        {
-          "@type": "#Microsoft.VideoAnalyzer.HttpExtension",
-          "name": "httpExtension",
-          "endpoint": {
-            "@type": "#Microsoft.VideoAnalyzer.UnsecuredEndpoint",
-            "url": "${inferencingUrl}",
-            "credentials": {
-              "@type": "#Microsoft.VideoAnalyzer.UsernamePasswordCredentials",
-              "username": "${inferencingUserName}",
-              "password": "${inferencingPassword}"
-            }
-          },
-          "image": {
-            "scale": {
-              "mode": "pad",
-              "width": "416",
-              "height": "416"
-            },
-            "format": {
-              "@type": "#Microsoft.VideoAnalyzer.ImageFormatBmp"
-            }
-          },
-          "inputs": [
-            {
-              "nodeName": "rtspSource",
-              "outputSelectors": [
-                {
-                  "property": "mediaType",
-                  "operator": "is",
-                  "value": "video"
-                }
-              ]
-            }
-          ],
-          "samplingOptions": {
-            "skipSamplesWithoutAnnotation": "false",
-            "maximumSamplesPerSecond": "2"
+      {
+        "@type": "#Microsoft.VideoAnalyzer.HttpExtension",
+        "name": "httpExtension",
+        "endpoint": {
+          "@type": "#Microsoft.VideoAnalyzer.UnsecuredEndpoint",
+          "url": "${inferencingUrl}",
+          "credentials": {
+            "@type": "#Microsoft.VideoAnalyzer.UsernamePasswordCredentials",
+            "username": "${inferencingUserName}",
+            "password": "${inferencingPassword}"
           }
         },
-        {
-            "@type":"#Microsoft.VideoAnalyzer.ObjectTrackingProcessor",
-            "name":"objectTracker",
-            "inputs":[
-                {
-                   "nodeName":"httpExtension"
-                }
-             ]
-         }
-      ],
+        "image": {
+          "scale": {
+            "mode": "pad",
+            "width": "416",
+            "height": "416"
+          },
+          "format": {
+            "@type": "#Microsoft.VideoAnalyzer.ImageFormatBmp"
+          }
+        },
+        "inputs": [
+          {
+            "nodeName": "rtspSource",
+            "outputSelectors": [
+              {
+                "property": "mediaType",
+                "operator": "is",
+                "value": "video"
+              }
+            ]
+          }
+        ],
+        "samplingOptions": {
+          "skipSamplesWithoutAnnotation": "false",
+          "maximumSamplesPerSecond": "5"
+        }
+      }
+    ],
     
     
     
@@ -133,7 +125,7 @@
           "hubOutputName": "${hubSinkOutputName}",
           "inputs": [
             {
-              "nodeName": "objectTracker"
+              "nodeName": "httpExtension"
             }
           ]
         },
@@ -153,10 +145,7 @@
                 "value": "video"
               }
             ]
-          },
-          {
-                "nodeName":"objectTracker"
-            }
+          }
         ],
         "videoCreationProperties": {
           "title": "sample-cvr-video-sink",
