@@ -1,6 +1,6 @@
 {
-  "name": "CVRToVideoSink",
   "@apiVersion": "1.1",
+  "name": "CVRToVideoSink",
   "properties": {
     "description": "Continuous video recording to Azure Video Sink",
     "parameters": [
