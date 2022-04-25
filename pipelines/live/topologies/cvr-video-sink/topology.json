@@ -30,7 +30,7 @@
 "name": "inferencingUrl",
 "type": "String",
 "description": "inferencing Url",
-"default": "http://custom_yolo/score"
+"default": "http://yolov5_box/score"
 },
 {
 "name": "inferencingUserName",
